@@ -1,27 +1,16 @@
-## Enviornment Setup
+# Setup
 
-1. Clone repository locally. In a terminal navigate to the project directory and run:
-```
-git clone https://github.com/chrisdchan/gva_senior_design.git 
-```
+### Configure user name and email (lets Git know who you are)
 
-2. Next run this to create virtual env
-```
-conda env create -f environment.yml
-```
+<kbd> git config --global user.name "First Last"  </kbd>  
+<kbd> git config --global user.email "myname@email.com"  </kbd>  
 
-3. Activate the virtual env
-```
-conda activate gva
-```
+To verify these additions, type:  
+<kbd> git config --list  </kbd>  
 
-4. You should be able to run
-```
-python hello.py
-```
+### Configure (terminal) editor of choice
 
-## Other
-Command to update enviornment.yml if new dependencies are added
-```
-conda env export > environment.yml
-```
+<kbd> git config --global core.editor "code --wait"  </kbd> 
+
+Other editor options can be found in [Setting Up Git](http://swcarpentry.github.io/git-novice/02-setup/)
+

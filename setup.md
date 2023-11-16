@@ -7,7 +7,7 @@ git clone https://github.com/chrisdchan/gva_senior_design.git
 
 2. Next run this to create virtual env
 ```
-conda env create -f environment.yml
+conda env create -f enviornment.yml
 ```
 
 3. Activate the virtual env

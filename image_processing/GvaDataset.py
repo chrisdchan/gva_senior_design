@@ -24,7 +24,7 @@ class GvaDataset(Dataset):
         with h5py.File(file_path, 'r') as f:
             data = f['exported_data'][()]
         tensor = torch.tensor(data)
-        tensor = tensor.squeeze(-1)
+        tensor = tensor.permute(2, 0, 1)
         return tensor
 
     def __getitem__(self, idx):
@@ -39,15 +39,19 @@ class GvaDataset(Dataset):
             label = self.transform(label)
 
         image = transforms.ToTensor()(image)
+        label = label.float()
 
         return image, label
 
 def test_dataset():
     img_dir = "data/images/"
     lab_dir = "data/labels/"
-    print([file for file in os.listdir(img_dir)])
     dataset = GvaDataset(img_dir, lab_dir)
 
     img, lab = dataset[2]
 
-    assert img.shape[1:] == lab.shape
+    print(img.shape)
+    print(lab.shape)
+
+    assert img.shape[1:] == lab.shape[1:]
+    assert lab.dtype == torch.float

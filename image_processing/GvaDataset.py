@@ -14,9 +14,9 @@ class GvaDataset(Dataset):
         self.image_dir = image_dir
         self.label_dir = label_dir
         self.transform = transform
-        names = [".".join(img_file.split('.')[:-1]) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
+        self.names = [".".join(img_file.split('.')[:-1]) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
         self.image_files = [os.path.join(image_dir, img_file) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
-        self.label_files = [os.path.join(label_dir, name + '.h5') for name in names]
+        self.label_files = [os.path.join(label_dir, name + '.h5') for name in self.names]
 
     def __len__(self):
         return len(self.image_files)
@@ -31,6 +31,7 @@ class GvaDataset(Dataset):
     def __getitem__(self, idx):
         image_path = self.image_files[idx]
         label_path = self.label_files[idx]
+        name = self.names[idx]
 
         image = Image.open(image_path)
         label = self._get_h5_tensor(label_path)
@@ -43,14 +44,14 @@ class GvaDataset(Dataset):
         label = label.float()
         label[label == 2] = 0
 
-        return image, label
+        return image, label, name
 
 def test_dataset():
     img_dir = "data/images/"
     lab_dir = "data/labels/"
     dataset = GvaDataset(img_dir, lab_dir)
 
-    for img, lab in dataset:
+    for img, lab, name in dataset:
         assert img.shape[1:] == lab.shape[1:]
         assert lab.dtype == torch.float
         assert torch.max(lab) == 1

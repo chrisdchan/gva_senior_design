@@ -25,7 +25,7 @@ class Experiment:
                       desc=f'Epoch {self.starting_epoch + epoch}/{self.starting_epoch + epochs}', 
                       unit='batch') as pbar:
                 for i, data in pbar:
-                    images, labels = data
+                    images, labels, _ = data
 
                     images = images.to(self.device)
                     labels = labels.to(self.device)

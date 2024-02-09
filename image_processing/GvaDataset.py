@@ -40,6 +40,7 @@ class GvaDataset(Dataset):
 
         image = transforms.ToTensor()(image)
         label = label.float()
+        label[label == 2] = 0
 
         return image, label
 
@@ -55,3 +56,5 @@ def test_dataset():
 
     assert img.shape[1:] == lab.shape[1:]
     assert lab.dtype == torch.float
+    assert torch.max(lab) == 1
+    assert torch.min(lab) == 0

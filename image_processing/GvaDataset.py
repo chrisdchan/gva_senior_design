@@ -14,8 +14,9 @@ class GvaDataset(Dataset):
         self.image_dir = image_dir
         self.label_dir = label_dir
         self.transform = transform
+        names = [".".join(img_file.split('.')[:-1]) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
         self.image_files = [os.path.join(image_dir, img_file) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
-        self.label_files = [os.path.join(label_dir, lab_file) for lab_file in os.listdir(label_dir) if lab_file.endswith(('.h5'))]
+        self.label_files = [os.path.join(label_dir, name + '.h5') for name in names]
 
     def __len__(self):
         return len(self.image_files)
@@ -49,12 +50,8 @@ def test_dataset():
     lab_dir = "data/labels/"
     dataset = GvaDataset(img_dir, lab_dir)
 
-    img, lab = dataset[2]
-
-    print(img.shape)
-    print(lab.shape)
-
-    assert img.shape[1:] == lab.shape[1:]
-    assert lab.dtype == torch.float
-    assert torch.max(lab) == 1
-    assert torch.min(lab) == 0
+    for img, lab in dataset:
+        assert img.shape[1:] == lab.shape[1:]
+        assert lab.dtype == torch.float
+        assert torch.max(lab) == 1
+        assert torch.min(lab) == 0

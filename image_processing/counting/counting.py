@@ -14,8 +14,8 @@ class Counter:
                 mask: tensor<long>
         """
         nodes = torch.nonzero(self.mask)
-        for node in nodes:
-            self.process_node(tuple(node))
+        for row, col in zip(nodes[:, 0], nodes[:, 1]):
+            self.process_node((row.item(), col.item()))
 
         return self.union_find.count_roots()
 

@@ -15,8 +15,10 @@ class GvaDataset(Dataset):
         self.label_dir = label_dir
         self.transform = transform
         self.names = [".".join(img_file.split('.')[:-1]) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
+        print(self.names)
         self.image_files = [os.path.join(image_dir, img_file) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
         self.label_files = [os.path.join(label_dir, name + '.h5') for name in self.names]
+        print(self.label_files)
 
     def __len__(self):
         return len(self.image_files)
@@ -47,9 +49,11 @@ class GvaDataset(Dataset):
         return image, label, name
 
 def test_dataset():
-    img_dir = "data/images/"
-    lab_dir = "data/labels/"
+    lab_dir = "image_processing/data/masks/_Masks"
+    img_dir = "image_processing/data/original/_Original"
     dataset = GvaDataset(img_dir, lab_dir)
+
+    assert len(os.listdir(img_dir)) == len(dataset)
 
     for img, lab, name in dataset:
         assert img.shape[1:] == lab.shape[1:]

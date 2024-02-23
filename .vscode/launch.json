@@ -11,5 +11,10 @@
             "program": "${file}",
             "console": "integratedTerminal"
         }
+<<<<<<< HEAD
     ]
+=======
+    ],
+    "python.pythonPath": "~/anaconda/envs/${env.CONDA_DEFAULT_ENV}/bin/python"
+>>>>>>> 8f7064e (Implement union find)
 }

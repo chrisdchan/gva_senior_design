@@ -1,6 +1,7 @@
 from torch.utils.data import Dataset
 from PIL import Image
 from torchvision import transforms
+from utils import get_h5_tensor
 
 import os
 import h5py
@@ -36,7 +37,7 @@ class GvaDataset(Dataset):
         name = self.names[idx]
 
         image = Image.open(image_path)
-        label = self._get_h5_tensor(label_path)
+        label = get_h5_tensor(label_path)
 
         if self.transform:
             image = self.transform(image)

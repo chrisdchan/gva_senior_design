@@ -16,20 +16,11 @@ class GvaDataset(Dataset):
         self.label_dir = label_dir
         self.transform = transform
         self.names = [".".join(img_file.split('.')[:-1]) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
-        print(self.names)
         self.image_files = [os.path.join(image_dir, img_file) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
-        self.label_files = [os.path.join(label_dir, name + '.h5') for name in self.names]
-        print(self.label_files)
+        self.label_files = [os.path.join(label_dir, name + '.pt') for name in self.names]
 
     def __len__(self):
         return len(self.image_files)
-
-    def _get_h5_tensor(self, file_path):
-        with h5py.File(file_path, 'r') as f:
-            data = f['exported_data'][()]
-        tensor = torch.tensor(data)
-        tensor = tensor.permute(2, 0, 1)
-        return tensor
 
     def __getitem__(self, idx):
         image_path = self.image_files[idx]
@@ -37,7 +28,7 @@ class GvaDataset(Dataset):
         name = self.names[idx]
 
         image = Image.open(image_path)
-        label = get_h5_tensor(label_path)
+        label = torch.load(label_path)
 
         if self.transform:
             image = self.transform(image)

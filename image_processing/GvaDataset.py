@@ -22,6 +22,10 @@ class GvaDataset(Dataset):
     def __len__(self):
         return len(self.image_files)
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     def __getitem__(self, idx):
         image_path = self.image_files[idx]
         label_path = self.label_files[idx]
@@ -31,8 +35,10 @@ class GvaDataset(Dataset):
         label = torch.load(label_path)
 
         if self.transform:
+            label = label.unsqueeze(0)
             image = self.transform(image)
             label = self.transform(label)
+            label = label.squeeze()
 
         image = transforms.ToTensor()(image)
         label = label.float()

@@ -13,9 +13,10 @@ class Experiment:
         self.starting_epoch = starting_epoch
 
         self.loss_history = []
+        self.validation_loss_history = []
         self.epoch_loss_history = []
 
-    def train(self, train_loader, epochs=10):
+    def train(self, train_loader, validation_loader, epochs=10):
         N = len(train_loader)
         for epoch in range(1, epochs + 1):
             self.model.train()
@@ -41,8 +42,20 @@ class Experiment:
                     pbar.set_postfix(loss = loss.item(), avg_loss=epoch_loss / (i + 1))
                     self.loss_history.append(loss.item())
 
+            self.model.eval()
+            with torch.no_grad():
+                val_loss = 0
+                for images, labels, _ in validation_loader:
+                    images = images.to(self.device)
+                    labels = labels.to(self.device)
+                    pred = self.model(images)
+                    loss = self.criterion(pred, labels)
+                    val_loss += loss.item()
+
+
             print(f'{self.starting_epoch +  epoch}/{self.starting_epoch + epochs} loss: {epoch_loss / N}')
             self.epoch_loss_history.append(epoch_loss / N)
+            self.validation_loss_history.append(val_loss)
             epoch_loss = 0
         
         print("Training Complete")
@@ -61,8 +74,10 @@ class Experiment:
             pickle.dump(loss_dict, f)
 
     def plot_loss(self):
-        plt.plot(self.epoch_loss_history)
+        plt.plot(self.epoch_loss_history, color='blue', label='Training Loss')
+        plt.plot(self.validation_loss_history, color='green', label='Validation Loss')
         plt.title("Training Loss")
+        plt.legend()
         plt.xlabel("Epochs")
         plt.ylabel(self.criterion.__name__)
 

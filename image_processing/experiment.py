@@ -22,7 +22,7 @@ class Experiment:
             self.model.train()
             epoch_loss = 0
             with tqdm(enumerate(train_loader), 
-                      total=N / train_loader.batch_size, 
+                      total=N, 
                       desc=f'Epoch {self.starting_epoch + epoch}/{self.starting_epoch + epochs}', 
                       unit='batch') as pbar:
                 for i, data in pbar:
@@ -34,6 +34,7 @@ class Experiment:
                     self.optimizer.zero_grad()
 
                     pred = self.model(images)
+                    print(pred.shape)
                     loss = self.criterion(pred, labels)
                     loss.backward()
                     self.optimizer.step()
@@ -42,20 +43,19 @@ class Experiment:
                     pbar.set_postfix(loss = loss.item(), avg_loss=epoch_loss / (i + 1))
                     self.loss_history.append(loss.item())
 
-            self.model.eval()
             with torch.no_grad():
-                val_loss = 0
+                epoch_val_loss = 0
                 for images, labels, _ in validation_loader:
                     images = images.to(self.device)
                     labels = labels.to(self.device)
                     pred = self.model(images)
-                    loss = self.criterion(pred, labels)
-                    val_loss += loss.item()
+                    val_loss = self.criterion(pred, labels)
+                    epoch_val_loss += val_loss.item()
+            val_loss = 4
 
-
-            print(f'{self.starting_epoch +  epoch}/{self.starting_epoch + epochs} loss: {epoch_loss / N}')
+            print(f'{self.starting_epoch +  epoch}/{self.starting_epoch + epochs} loss: {epoch_loss / N} val loss: {val_loss / len(validation_loader)}')
             self.epoch_loss_history.append(epoch_loss / N)
-            self.validation_loss_history.append(val_loss)
+            self.validation_loss_history.append(val_loss / len(validation_loader))
             epoch_loss = 0
         
         print("Training Complete")

@@ -34,6 +34,10 @@ class Experiment:
                     self.optimizer.zero_grad()
 
                     pred = self.model(images)
+
+                    pred = torch.squeeze(pred)
+                    labels = torch.squeeze(labels)
+
                     loss = self.criterion(pred, labels)
                     loss.backward()
                     self.optimizer.step()

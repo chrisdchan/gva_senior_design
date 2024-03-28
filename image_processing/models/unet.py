@@ -6,8 +6,11 @@ import torch.nn as nn
 
 class UNet(nn.Module):
 
-    def __init__(self, in_channels=3, out_channels=1, init_features=32):
+    def __init__(self, in_channels=3, out_channels=2, init_features=32):
         super(UNet, self).__init__()
+
+        assert in_channels == 3
+        assert out_channels == 2
 
         features = init_features
         self.encoder1 = UNet._block(in_channels, features, name="enc1")
@@ -62,7 +65,9 @@ class UNet(nn.Module):
         dec1 = self.upconv1(dec2)
         dec1 = torch.cat((dec1, enc1), dim=1)
         dec1 = self.decoder1(dec1)
-        return nn.functional.softmax(self.conv(dec1))
+        res = self.conv(dec1)
+        res = nn.functional.softmax(res, dim=1)
+        return res[:, 1, :, :]
 
     @staticmethod
     def _block(in_channels, features, name):

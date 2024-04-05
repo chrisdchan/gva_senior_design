@@ -1,4 +1,5 @@
-data
+data/*
+weights/*
 *.pt
 *.pyc
 __pycache__/

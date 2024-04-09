@@ -8,7 +8,7 @@ import torch
 VERSION = 1
 
 class Experiment:
-    def __init__(self, model, criterion, optimizer, name, bench=100, device='cuda'):
+    def __init__(self, model=None, criterion=None, optimizer=None, name=None, bench=100, device='cuda'):
         self.model = model
         self.criterion = criterion
         self.optimizer = optimizer
@@ -20,7 +20,14 @@ class Experiment:
         self.train_loss_history = []
         self.val_loss_history = []
 
+    def assert_model_init(self):
+        assert self.model != None
+        assert self.criterion != None
+        assert self.optimizer != None
+
     def train(self, train_loader, validation_loader, epochs=10, should_bench=True, bench=None):
+        self.assert_model_init()
+        
         N = len(train_loader)
         end_epoch = self.current_epoch + epochs
 
@@ -76,6 +83,8 @@ class Experiment:
         
     def save_experiment(self, path=None):
 
+        self.assert_model_init()
+
         if path == None:
             file_name = f"{self.current_epoch}.pkl"
             weights_dir = "/projectnb/dunlop/chrisdc/gva_senior_design/image_processing/weights/"
@@ -86,12 +95,15 @@ class Experiment:
         assert path.endswith(".pkl")
 
         exp_dict = dict(
-            train_loss_history = self.train_loss_history, 
-            val_loss_history = self.val_loss_history, 
+            version = VERSION,
+            name = self.name,
+            model = self.model,
+            criterion = self.criterion,
+            optimizer = self.optimizer,
             weights = self.model.state_dict(),
             current_epoch = self.current_epoch,
-            name = self.name,
-            version = VERSION
+            train_loss_history = self.train_loss_history, 
+            val_loss_history = self.val_loss_history
         )
 
         with open(path, 'wb') as f:
@@ -105,13 +117,18 @@ class Experiment:
         with open(path, 'rb') as f:
             exp_dict = pickle.load(f)
 
+
+        self.name = exp_dict['name']
+        self.model = exp_dict['model']
+        self.criterion = exp_dict['criterion']
+        self.optimizer = exp_dict['optimizer']
+
         state_dict = exp_dict['weights']
         self.model.load_state_dict(state_dict)
-        
-        self.train_loss_history = exp_dict['train_loss_history']
-        self.val_loss_history = exp_dict['val_loss_history']
-        self.current_epoch = exp_dict['current_epoch']
-        self.name = exp_dict['name']
+
+        self.current_epoch = exp_dict["current_epoch"]
+        self.train_loss_history = exp_dict["train_loss_history"]
+        self.val_loss_history = exp_dict["val_loss_history"]
 
     def plot_loss(self, title="Training Loss", xlabel="Epochs", ylabel="Dice Loss"):
         plt.plot(self.train_loss_history, color='blue', label='Training Loss')

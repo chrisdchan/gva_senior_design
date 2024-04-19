@@ -1,10 +1,10 @@
 clear all; clc;
 %% Script
 % Load and display the original image
-originalImage = imread('C:\Users\chris\bu\gva_senior_design/image_processing/data/uncropped/Testing_Image_1.jpg');
+originalImage = imread('Testing_Image_14.jpg');
 figure(1), imshow(originalImage), title('Original Image');
 rect = [0, 2200, 2500, 1500];
-originalImg = originalImage;
+originalImg = imcrop(originalImage, rect);
 figure(2), imshow(originalImg), title('Cropped Image');
 %%
 % Process the image to obtain ROI cleaned binary image
@@ -18,21 +18,6 @@ for i = 1:length(standardizedImgList)
     % Optionally, save the outputted image
     % imwrite(standardizedImgList{i}, sprintf('standardized_image_%d.jpg', i));
 end
-
-function cropImage(inputImage, outputDir)
-    originalImage = imread('Testing_Image_14.jpg');
-    roiCleaned = processImageToROI(originalImg);
-    [croppedImgList, standardizedImgList] = segmentAndStandardizePipettes(roiCleaned, originalImg);
-end
-
-function testCoder(inputImage, outputDir)
-    img = imread(inputImage);
-    img = rgb2gray(img);
-    img = imgaussfilt(img, 3);
-    imwrite(img, outputDir);
-end
-
-
 %% Functions
 function roiCleanedBinary = processImageToROI(image)
     % Convert to grayscale if the image is in color

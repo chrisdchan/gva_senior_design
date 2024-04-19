@@ -1,6 +1,7 @@
 {
     "python.analysis.extraPaths": [
-        "./segment-anything"
+        "./segment-anything",
+        "./image_processing"
     ],
     "cmake.configureOnOpen": true
 }

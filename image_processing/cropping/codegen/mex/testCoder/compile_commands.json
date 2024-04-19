@@ -1,0 +1,74 @@
+[
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   testCoder_data.c /Fobuild\\win64\\testCoder_data.obj",
+    "file": "testCoder_data.c",
+    "output": "build/win64/testCoder_data.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   rt_nonfinite.c /Fobuild\\win64\\rt_nonfinite.obj",
+    "file": "rt_nonfinite.c",
+    "output": "build/win64/rt_nonfinite.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   testCoder_initialize.c /Fobuild\\win64\\testCoder_initialize.obj",
+    "file": "testCoder_initialize.c",
+    "output": "build/win64/testCoder_initialize.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   testCoder_terminate.c /Fobuild\\win64\\testCoder_terminate.obj",
+    "file": "testCoder_terminate.c",
+    "output": "build/win64/testCoder_terminate.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   testCoder.c /Fobuild\\win64\\testCoder.obj",
+    "file": "testCoder.c",
+    "output": "build/win64/testCoder.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   interface\\_coder_testCoder_api.c /Fobuild\\win64\\_coder_testCoder_api.obj",
+    "file": "interface/_coder_testCoder_api.c",
+    "output": "build/win64/_coder_testCoder_api.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   interface\\_coder_testCoder_mex.c /Fobuild\\win64\\_coder_testCoder_mex.obj",
+    "file": "interface/_coder_testCoder_mex.c",
+    "output": "build/win64/_coder_testCoder_mex.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   warning.c /Fobuild\\win64\\warning.obj",
+    "file": "warning.c",
+    "output": "build/win64/warning.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   imgaussfilt.c /Fobuild\\win64\\imgaussfilt.obj",
+    "file": "imgaussfilt.c",
+    "output": "build/win64/imgaussfilt.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   testCoder_emxutil.c /Fobuild\\win64\\testCoder_emxutil.obj",
+    "file": "testCoder_emxutil.c",
+    "output": "build/win64/testCoder_emxutil.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   interface\\_coder_testCoder_info.c /Fobuild\\win64\\_coder_testCoder_info.obj",
+    "file": "interface/_coder_testCoder_info.c",
+    "output": "build/win64/_coder_testCoder_info.obj"
+  },
+  {
+    "directory": "C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\\codegen\\mex\\testCoder",
+    "command": "cl /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I \".\" /I \"C:\\Users\\chris\\bu\\gva_senior_design\\image_processing\\cropping\" /I \"C:\\Program Files\\MATLAB\\R2022a\\extern\\include\" /I \".\\interface\" /I \".\" -DMODEL=testCoder_mex   \"C:\\Program Files\\MATLAB\\R2022a\\extern\\version\\c_mexapi_version.c\" /Fobuild\\win64\\c_mexapi_version.obj",
+    "file": "C:/Program Files/MATLAB/R2022a/extern/version/c_mexapi_version.c",
+    "output": "build/win64/c_mexapi_version.obj"
+  }
+]

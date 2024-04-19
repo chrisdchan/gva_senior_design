@@ -1,3 +1,4 @@
 /image_processing/data
 .vscode/*
 .env
+config.yaml

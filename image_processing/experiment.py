@@ -1,3 +1,10 @@
+import sys
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+sys.path.append(os.getenv("PROJECT_DIR"))
+
 import torch
 import pickle
 import matplotlib.pyplot as plt

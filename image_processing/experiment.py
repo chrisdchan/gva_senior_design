@@ -97,11 +97,13 @@ class Experiment:
         self.assert_model_init()
 
         if path == None:
-            file_name = f"{self.current_epoch}.pkl"
+            exp_file_name = f"{self.current_epoch}.pkl"
+            weights_file_name = f"{self.current_epoch}.pt"
             weights_dir = "/projectnb/dunlop/chrisdc/gva_senior_design/image_processing/weights/"
             model_dir = os.path.join(weights_dir, self.name)
             os.makedirs(model_dir, exist_ok = True)
-            path = os.path.join(model_dir, file_name)
+            exp_path = os.path.join(model_dir, exp_file_name)
+            weights_path = os.path.join(model_dir, weights_file_name)
         
         assert path.endswith(".pkl")
 
@@ -117,8 +119,10 @@ class Experiment:
             val_loss_history = self.val_loss_history
         )
 
-        with open(path, 'wb') as f:
+        with open(exp_path, 'wb') as f:
             pickle.dump(exp_dict, f)
+
+        torch.save(self.model.state_dict(), weights_path)
 
 
     def load_experiment(self, path):

@@ -1,0 +1,53 @@
+# CompilerName=msvc170
+# Mode=optim
+ninja_required_version = 1.3
+
+# Basic folders
+root = .
+builddir = $root\build\win64
+matlabdir = C:\Program Files\MATLAB\R2022a
+startdir = C:\Users\chris\bu\gva_senior_design\image_processing\cropping
+
+# Toolchain information
+cc = cl
+cxx = cl
+linker = link
+linkerxx = link
+
+cflags =  /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I "$root" /I "$startdir" /I "$matlabdir\extern\include" /I "$root\interface" /I "." -DMODEL=testCoder_mex  
+
+cxxflags =   /c /Zc:__cplusplus /Zp8 /GR /W3 /EHs /nologo /MD /D_CRT_SECURE_NO_DEPRECATE /D_SCL_SECURE_NO_DEPRECATE /D_SECURE_SCL=0   /DMATLAB_MEX_FILE  /DMATLAB_MEX_FILE /O2 /Oy- /DNDEBUG /fp:strict /utf-8 /I "$root" /I "$startdir" /I "$matlabdir\extern\include" /I "$root\interface" /I "." -DMODEL=testCoder_mex  
+
+ldflags =  /nologo /manifest   /DLL /LIBPATH:"$matlabdir\extern\lib\win64\microsoft" libmx.lib libmex.lib libmat.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib  /out:"testCoder_mex.mexw64" libemlrt.lib libcovrt.lib libut.lib libmwmathutil.lib  "$matlabdir\extern\lib\win64\microsoft\libmwjpegreader.lib" "$matlabdir\extern\lib\win64\microsoft\libmwrgb2gray_tbb.lib" "$matlabdir\extern\lib\win64\microsoft\libmwippfilter.lib" "$matlabdir\extern\lib\win64\microsoft\libmwimfilter.lib" /export:mexFunction /export:mexfilerequiredapiversion /export:emlrtMexFcnProperties /export:testCoder /export:testCoder_initialize /export:testCoder_terminate /export:testCoder_atexit /export:emxEnsureCapacity_int32_T /export:emxEnsureCapacity_uint32_T /export:emxFree_int32_T /export:emxFree_uint32_T /export:emxInit_int32_T /export:emxInit_uint32_T /export:emxEnsureCapacity_uint8_T /export:emxFree_uint8_T /export:emxInit_uint8_T /export:emxEnsureCapacity_char_T /export:emxFreeStruct_rtString /export:emxFree_char_T /export:emxInitStruct_rtString /export:emxInit_char_T
+
+# Build Rules
+rule cc
+    command = $cc $cflags $in /Fo$out
+
+rule cxx
+    command = $cxx $cxxflags $in /Fo$out
+
+rule link
+    command = $linker @$out.rsp $ldflags
+    rspfile = $out.rsp
+    rspfile_content = $in
+
+rule linkxx
+    command = $linkerxx $in $ldflags
+
+# Build
+build $builddir\testCoder_data.obj : cc $root\testCoder_data.c
+build $builddir\rt_nonfinite.obj : cc $root\rt_nonfinite.c
+build $builddir\testCoder_initialize.obj : cc $root\testCoder_initialize.c
+build $builddir\testCoder_terminate.obj : cc $root\testCoder_terminate.c
+build $builddir\testCoder.obj : cc $root\testCoder.c
+build $builddir\_coder_testCoder_api.obj : cc $root\interface\_coder_testCoder_api.c
+build $builddir\_coder_testCoder_mex.obj : cc $root\interface\_coder_testCoder_mex.c
+build $builddir\warning.obj : cc $root\warning.c
+build $builddir\imgaussfilt.obj : cc $root\imgaussfilt.c
+build $builddir\testCoder_emxutil.obj : cc $root\testCoder_emxutil.c
+build $builddir\_coder_testCoder_info.obj : cc $root\interface\_coder_testCoder_info.c
+build $builddir\c_mexapi_version.obj : cc $matlabdir\extern\version\c_mexapi_version.c
+
+# Link
+build $root\testCoder_mex.mexw64 : link $builddir\testCoder_data.obj $builddir\rt_nonfinite.obj $builddir\testCoder_initialize.obj $builddir\testCoder_terminate.obj $builddir\testCoder.obj $builddir\_coder_testCoder_api.obj $builddir\_coder_testCoder_mex.obj $builddir\warning.obj $builddir\imgaussfilt.obj $builddir\testCoder_emxutil.obj $builddir\_coder_testCoder_info.obj $builddir\c_mexapi_version.obj 

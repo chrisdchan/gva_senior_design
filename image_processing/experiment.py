@@ -1,9 +1,20 @@
+import sys
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+sys.path.append(os.getenv("PROJECT_DIR"))
+
 import torch
 import pickle
 import matplotlib.pyplot as plt
 from tqdm import tqdm
 import os
 import torch
+
+import numpy as np
+
+from deploy.deviceUnpickler import DeviceUnpickler
 
 VERSION = 1
 
@@ -86,11 +97,13 @@ class Experiment:
         self.assert_model_init()
 
         if path == None:
-            file_name = f"{self.current_epoch}.pkl"
+            exp_file_name = f"{self.current_epoch}.pkl"
+            weights_file_name = f"{self.current_epoch}.pt"
             weights_dir = "/projectnb/dunlop/chrisdc/gva_senior_design/image_processing/weights/"
             model_dir = os.path.join(weights_dir, self.name)
             os.makedirs(model_dir, exist_ok = True)
-            path = os.path.join(model_dir, file_name)
+            exp_path = os.path.join(model_dir, exp_file_name)
+            weights_path = os.path.join(model_dir, weights_file_name)
         
         assert path.endswith(".pkl")
 
@@ -106,8 +119,10 @@ class Experiment:
             val_loss_history = self.val_loss_history
         )
 
-        with open(path, 'wb') as f:
+        with open(exp_path, 'wb') as f:
             pickle.dump(exp_dict, f)
+
+        torch.save(self.model.state_dict(), weights_path)
 
 
     def load_experiment(self, path):
@@ -115,8 +130,7 @@ class Experiment:
         assert path.endswith(".pkl")
 
         with open(path, 'rb') as f:
-            exp_dict = pickle.load(f)
-
+            exp_dict = DeviceUnpickler(f).load()
 
         self.name = exp_dict['name']
         self.model = exp_dict['model']
@@ -130,9 +144,18 @@ class Experiment:
         self.train_loss_history = exp_dict["train_loss_history"]
         self.val_loss_history = exp_dict["val_loss_history"]
 
-    def plot_loss(self, title="Training Loss", xlabel="Epochs", ylabel="Dice Loss"):
-        plt.plot(self.train_loss_history, color='blue', label='Training Loss')
-        plt.plot(self.val_loss_history, color='green', label='Validation Loss')
+    def plot_loss(self, title="Training Loss", xlabel="Epochs", ylabel="Dice Loss", k=1):
+
+        train_loss = np.array(self.train_loss_history)
+        avg_train_loss = np.average(train_loss.reshape(-1, k), axis=1)
+
+        val_loss = np.array(self.val_loss_history)
+        avg_val_loss = np.average(val_loss.reshape(-1, k), axis=1)
+
+        epochs = [i * k for i in range(len(avg_train_loss))]
+
+        plt.plot(epochs, avg_train_loss, color='blue', label='Training Loss')
+        plt.plot(epochs, avg_val_loss, color='green', label='Validation Loss')
         plt.title(title)
         plt.legend()
         plt.xlabel(xlabel)

@@ -3,15 +3,17 @@
 # Description: Entry point for running pipeline for gva analysis
 
 import yaml
-from deployedModel import DeployedModel
+from deploy.deployedModel import DeployedModel
 from counting.gva_dataset_analysis_V3 import crop_and_display_image, preprocess_count_and_annotate_objects, calculate_cfu_ml 
 from PIL import Image
+import torch
+import numpy as np
 
 import os
 from dotenv import load_dotenv
 load_dotenv()
 
-with open('../config.yaml', 'rt') as config_file:
+with open(os.path.join(os.getenv('PROJECT_DIR'), 'config.yaml'), 'rt') as config_file:
     CONFIG = list(yaml.safe_load_all(config_file.read()))[0]
 
 class GVA:
@@ -20,7 +22,7 @@ class GVA:
         model_path = os.path.join(os.getenv('PROJECT_DIR'), CONFIG['segmentation']['model-path'])
         self.model_path = model_path
         self.dilution_factor = CONFIG['counting']['dilution-factor']
-        self.volumne_platted_ml = CONFIG['counting']['volume-platted-ml']
+        self.volume_plated_ml = CONFIG['counting']['volume-platted-ml']
 
     def crop_image(self, image):
         # TODO
@@ -31,8 +33,9 @@ class GVA:
         return deployed_model.predict(cropped_img)
 
     def count_cfus(self, segmented_img):
-        cropped_binary_mask = crop_and_display_image(segmented_img)
+        cropped_binary_mask = np.array(crop_and_display_image(segmented_img[0]))
         num_objects = preprocess_count_and_annotate_objects(cropped_binary_mask)
+        print(num_objects)
         cfu_ml = calculate_cfu_ml(num_objects, self.dilution_factor, self.volume_plated_ml)
         return cfu_ml, num_objects
 
@@ -42,7 +45,9 @@ class GVA:
         segmented_imgs = [self.segment_image(img) for img in cropped_imgs]
         cfu_counts = [self.count_cfus(img) for img in segmented_imgs]
 
-        print(cfu_counts)
+        for cfu_ml, count in cfu_counts:
+            print(f"CFU/ML estimate: {cfu_ml} with {count} objects detected")
+
 
 def main():
     test_image = os.path.join(os.getenv('PROJECT_DIR'), "image_processing/data/images/test/YH_3.png")

@@ -12,6 +12,10 @@ from tqdm import tqdm
 import os
 import torch
 
+import numpy as np
+
+from deploy.deviceUnpickler import DeviceUnpickler
+
 VERSION = 1
 
 class Experiment:
@@ -122,8 +126,7 @@ class Experiment:
         assert path.endswith(".pkl")
 
         with open(path, 'rb') as f:
-            exp_dict = pickle.load(f)
-
+            exp_dict = DeviceUnpickler(f).load()
 
         self.name = exp_dict['name']
         self.model = exp_dict['model']
@@ -137,9 +140,18 @@ class Experiment:
         self.train_loss_history = exp_dict["train_loss_history"]
         self.val_loss_history = exp_dict["val_loss_history"]
 
-    def plot_loss(self, title="Training Loss", xlabel="Epochs", ylabel="Dice Loss"):
-        plt.plot(self.train_loss_history, color='blue', label='Training Loss')
-        plt.plot(self.val_loss_history, color='green', label='Validation Loss')
+    def plot_loss(self, title="Training Loss", xlabel="Epochs", ylabel="Dice Loss", k=1):
+
+        train_loss = np.array(self.train_loss_history)
+        avg_train_loss = np.average(train_loss.reshape(-1, k), axis=1)
+
+        val_loss = np.array(self.val_loss_history)
+        avg_val_loss = np.average(val_loss.reshape(-1, k), axis=1)
+
+        epochs = [i * k for i in range(len(avg_train_loss))]
+
+        plt.plot(epochs, avg_train_loss, color='blue', label='Training Loss')
+        plt.plot(epochs, avg_val_loss, color='green', label='Validation Loss')
         plt.title(title)
         plt.legend()
         plt.xlabel(xlabel)

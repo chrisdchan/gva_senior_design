@@ -11,10 +11,10 @@ class GvaDataset(Dataset):
     '''
     Assume images and labels that correspond to each other have the same name
     '''
-    def __init__(self, image_dir, label_dir, transform=None):
+    def __init__(self, image_dir, label_dir, transforms=[]):
         self.image_dir = image_dir
         self.label_dir = label_dir
-        self.transform = transform
+        self.transforms = transforms
         self.names = [".".join(img_file.split('.')[:-1]) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
         self.image_files = [os.path.join(image_dir, img_file) for img_file in os.listdir(image_dir) if img_file.endswith(('.jpg', '.jpeg', '.png'))]
         self.label_files = [os.path.join(label_dir, name + '.pt') for name in self.names]
@@ -30,10 +30,9 @@ class GvaDataset(Dataset):
         image = Image.open(image_path)
         label = torch.load(label_path)
 
-        if self.transform:
+        for transform in self.transforms:
             label = label.unsqueeze(0)
-            image = self.transform(image)
-            label = self.transform(label)
+            image, label = transform(image, label)
             label = label.squeeze()
 
         image = transforms.ToTensor()(image)
